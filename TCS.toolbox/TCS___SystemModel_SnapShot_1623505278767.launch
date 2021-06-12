@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.lamport.tla.toolbox.tool.tlc.modelCheck">
+    <stringAttribute key="configurationName" value="SystemModel_SnapShot_1623505278767"/>
+    <intAttribute key="distributedFPSetCount" value="0"/>
+    <stringAttribute key="distributedNetworkInterface" value="192.168.3.7"/>
+    <intAttribute key="distributedNodesCount" value="1"/>
+    <stringAttribute key="distributedTLC" value="off"/>
+    <intAttribute key="fpIndex" value="16"/>
+    <intAttribute key="maxHeapSize" value="50"/>
+    <stringAttribute key="modelBehaviorInit" value=""/>
+    <stringAttribute key="modelBehaviorNext" value=""/>
+    <stringAttribute key="modelBehaviorSpec" value=""/>
+    <intAttribute key="modelBehaviorSpecType" value="0"/>
+    <stringAttribute key="modelBehaviorVars" value=""/>
+    <stringAttribute key="modelComments" value=""/>
+    <booleanAttribute key="modelCorrectnessCheckDeadlock" value="true"/>
+    <listAttribute key="modelCorrectnessInvariants"/>
+    <listAttribute key="modelCorrectnessProperties"/>
+    <listAttribute key="modelParameterConstants">
+        <listEntry value="Val;;{v1, v2};1;1"/>
+        <listEntry value="Trans;;{t1, t2};1;1"/>
+        <listEntry value="Key;;{k1, k2};1;1"/>
+        <listEntry value="KeySharding;;k1 :&gt; s1 @@ k2 :&gt; s2;0;0"/>
+        <listEntry value="TxCoord;;t1 :&gt; s1 @@ t2 :&gt; s2;0;0"/>
+        <listEntry value="Client;;{c1, c2};1;1"/>
+        <listEntry value="Shard;;{s1, s2};1;1"/>
+    </listAttribute>
+    <intAttribute key="modelVersion" value="20191005"/>
+    <intAttribute key="numberOfWorkers" value="4"/>
+    <stringAttribute key="result.mail.address" value=""/>
+    <stringAttribute key="specName" value="TCS"/>
+    <stringAttribute key="tlcResourcesProfile" value="local custom"/>
+</launchConfiguration>
