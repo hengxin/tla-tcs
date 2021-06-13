@@ -71,8 +71,9 @@ Init ==
     /\ msg = {}
     /\ submitted = {}
 ----------------------------------------------------------------------------
-Vote(t, s, n) == "ABORT" \* TODO
-Decision(ms) == "ABORT" \* TODO
+ComputeVote(t, s, n) == "ABORT" \* TODO
+ComputeDecision(vs) ==
+    IF \E v \in vs: v = "ABORT" THEN "ABORT" ELSE "COMMIT"
 ----------------------------------------------------------------------------
 Certify(t) == \* Certify t \in Tid
     /\ t \in Tid \ submitted
@@ -85,7 +86,7 @@ Prepare(t, s) == \* Prepare t \in Tid on s \in Shard when receive "PREPARE(t)" m
         /\ m = [type |-> "PREPARE", t |-> t, s |-> s]
         /\ next' = [next EXCEPT ![s] = @ + 1]
         /\ txn' = [txn EXCEPT ![s][next'[s]] = t]
-        /\ vote' = [vote EXCEPT ![s][next'[s]] = Vote(t, s, next'[s])] \* TODO
+        /\ vote' = [vote EXCEPT ![s][next'[s]] = ComputeVote(t, s, next'[s])] \* TODO
         /\ phase' = [phase EXCEPT ![s][next'[s]] = "PREPARED"]
         /\ SendAndDelete({[type |-> "PREPARE_ACK",
                               s |-> s,
@@ -95,30 +96,38 @@ Prepare(t, s) == \* Prepare t \in Tid on s \in Shard when receive "PREPARE(t)" m
                          {m})
     /\ UNCHANGED <<dec, submitted>>
 
-Pos(t, s) ==
-    LET m == ChooseUnique(msg, LAMBDA m : m.type = "PREPARE_ACK" /\ m.t = t /\ m.s = s)
-     IN m.n
-     
-PrepareAck(t, s) ==
+PrepareAck(t, s) == \* PrepareAck for t \in Tid on shard s \in Shard when receive all "PREPARE_ACK" messages for t
     /\ s = Coord[t]
     /\ LET ms == {m \in msg : m.type = "PREPARE_ACK" /\ m.t = t}
-       shards == {m.s : m \in ms}
-        IN /\ shards = TSharding(t)
+           vs == {m.v : m \in ms}
+           ss == {m.s : m \in ms}
+        IN /\ ss = TSharding(t)
            /\ SendAndDelete({[type |-> "DECISION",
-                                 p |-> Pos(t, shard),
-                                 d |-> Decision(ms),
-                                 s |-> shard] : shard \in shards}, 
-                         ms)
+                                 p |-> ChooseUnique(ms, LAMBDA m : m.s = shard).n,
+                                 d |-> ComputeDecision(vs),
+                                 s |-> shard] : shard \in ss}, 
+                            ms)
     /\ UNCHANGED <<sVars, submitted>>
+
+Decision(s) == \* Decide on shard s \in Shard when receive a "DECISION" message
+    /\ \E m \in msg:
+        /\ m.type = "DECISION"
+        /\ m.s = s
+        /\ dec' = [dec EXCEPT ![s][m.p] = m.d]
+        /\ phase' = [phase EXCEPT ![s][m.p] = "DECIDED"]
+        /\ Delete({m})
+    /\ UNCHANGED <<next, txn, vote, submitted>>
 ----------------------------------------------------------------------------
 Next ==
     \/ \E t \in Tid: Certify(t)
     \/ \E t \in Tid, s \in Shard:
         \/ Prepare(t, s)
         \/ PrepareAck(t, s)
+    \/ \E s \in Shard:
+        \/ Decision(s)
 
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 12:25:10 CST 2021 by hengxin
+\* Last modified Sun Jun 13 17:13:35 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin
