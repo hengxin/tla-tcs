@@ -6,7 +6,11 @@ and Alexey Gotsman.
 
 We have specified the multi-shot 2PC protocol in Figure 1 of DISC'2018.
 
-TODO: to specify the fault-tolerant commit protocol in Figure 5 of DISC'2018.
+TODO: We plan
+  - to test SER using the Serializability Theorem
+  - to integrate TCS into a real distributed transaction protocol
+  - to implement certification functions for other isolation levels
+  - to specify the fault-tolerant commit protocol in Figure 5 of DISC'2018.
 *)
 EXTENDS Naturals, Integers, FiniteSets, Sequences, Functions, TLC,
         FiniteSetsExt
@@ -50,13 +54,17 @@ VARIABLES
 sVars == <<next, txn, vote, dec, phase>>
 vars == <<next, txn, vote, dec, phase, msg, submitted>>
 ----------------------------------------------------------------------------
-(* TODO:
-"COMMIT/ABORT": using TRUE/FALSE (initially, FALSE???)
-"PREPARE/PREPARE_ACK/DECISION": using CONSTANTS
+(*
+To utilize the logical computations, we replace "COMMIT/ABORT" with "TRUE/FALSE".
+The initial value of vote[s][i] and dec[s][i] is then "FALSE".
+
+TODO: Should we do this?
+  - using CONSTANTS for "PREPARE/PREPARE_ACK/DECISION"
+  - using CONSTANTS for "START/PREPARED/DECIDED"
 *)
 Message == [type : {"PREPARE"}, t : Tid, s : Shard]
-    \cup [type : {"PREPARE_ACK"}, s : Shard, n : Int, t : Tid, v : {"COMMIT", "ABORT"}]
-    \cup [type : {"DECISION"}, p : Int, d : {"COMMIT", "ABORT"}, s : Shard]
+    \cup [type : {"PREPARE_ACK"}, s : Shard, n : Int, t : Tid, v : BOOLEAN]
+    \cup [type : {"DECISION"}, p : Int, d : BOOLEAN, s : Shard]
 
 Send(m) == msg' = msg \cup m
 Delete(m) == msg' = msg \ m
@@ -65,8 +73,8 @@ SendAndDelete(sm, dm) == msg' = (msg \cup sm) \ dm
 TypeOK ==
     /\ next \in [Shard -> Int]
     /\ txn \in [Shard -> [Slot -> Tid \cup {NotTid}]]
-    /\ vote \in [Shard -> [Slot -> {"COMMIT", "ABORT", "NULL"}]]
-    /\ dec \in [Shard -> [Slot -> {"COMMIT", "ABORT", "NULL"}]]
+    /\ vote \in [Shard -> [Slot -> BOOLEAN]]
+    /\ dec \in [Shard -> [Slot -> BOOLEAN]]
     /\ phase \in [Shard -> [Slot -> {"START", "PREPARED", "DECIDED"}]]
     /\ msg \subseteq Message
     /\ submitted \subseteq Tid
@@ -74,8 +82,8 @@ TypeOK ==
 Init ==
     /\ next = [s \in Shard |-> -1]
     /\ txn = [s \in Shard |-> [i \in Slot |-> NotTid]]
-    /\ vote = [s \in Shard |-> [i \in Slot |-> "NULL"]]
-    /\ dec = [s \in Shard |-> [i \in Slot |-> "NULL"]]
+    /\ vote = [s \in Shard |-> [i \in Slot |-> FALSE]]
+    /\ dec = [s \in Shard |-> [i \in Slot |-> FALSE]]
     /\ phase = [s \in Shard |-> [i \in Slot |-> "START"]]
     /\ msg = {}
     /\ submitted = {}
@@ -86,24 +94,21 @@ ComputeVote(t, s, n) ==
     LET cs == {k \in Slot : \* committed slots before position n
                   /\ k < n
                   /\ phase[s][k] = "DECIDED"
-                  /\ dec[s][k] = "COMMIT"}
+                  /\ dec[s][k]}
         ct == {txn[s][k] : k \in cs} \* committed transactions
-        fv == IF \A k \in KeyOnShard(s), v \in Ver:
+        fv == \A k \in KeyOnShard(s), v \in Ver:
                   <<k, v>> \in RSet[t] => (\A c \in ct : k \in WSet[c] => CVer[c] <= v)
-              THEN "COMMIT" ELSE "ABORT"
         ps == {k \in Slot: \* "prepared to commit" slots before position n
                   /\ k < n
                   /\ phase[s][k] = "PREPARED"
-                  /\ vote[s][k] = "COMMIT"}
+                  /\ vote[s][k]}
         pt == {txn[s][k] : k \in ps} \* "prepared to commit" transactions
-        gv == IF \A k \in KeyOnShard(s), v \in Ver:
+        gv == \A k \in KeyOnShard(s), v \in Ver:
                   /\ <<k, v>> \in RSet[t] => (\A p \in pt : k \notin WSet[p])
                   /\ k \in WSet[t] => (\A p \in pt : <<k, v>> \notin RSet[p])
-              THEN "COMMIT" ELSE "ABORT"
-     IN IF fv = "COMMIT" /\ gv = "COMMIT" THEN "COMMIT" ELSE "ABORT"
+     IN fv /\ gv
 
-ComputeDecision(vs) ==
-    IF \A v \in vs: v = "COMMIT" THEN "COMMIT" ELSE "ABORT"
+ComputeDecision(vs) == \A v \in vs: v
 ----------------------------------------------------------------------------
 Certify(t) == \* Certify t \in Tid
     /\ t \in Tid \ submitted
@@ -163,5 +168,5 @@ Next ==
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 19:22:37 CST 2021 by hengxin
+\* Last modified Sun Jun 13 20:02:41 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin

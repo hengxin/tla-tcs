@@ -54,8 +54,13 @@ VARIABLES
 sVars == <<next, txn, vote, dec, phase>>
 vars == <<next, txn, vote, dec, phase, msg, submitted>>
 ----------------------------------------------------------------------------
-(* TODO:
-"PREPARE/PREPARE_ACK/DECISION": using CONSTANTS
+(*
+To utilize the logical computations, we replace "COMMIT/ABORT" with "TRUE/FALSE".
+The initial value of vote[s][i] and dec[s][i] is then "FALSE".
+
+TODO: Should we do this?
+  - using CONSTANTS for "PREPARE/PREPARE_ACK/DECISION"
+  - using CONSTANTS for "START/PREPARED/DECIDED"
 *)
 Message == [type : {"PREPARE"}, t : Tid, s : Shard]
     \cup [type : {"PREPARE_ACK"}, s : Shard, n : Int, t : Tid, v : BOOLEAN]
@@ -163,5 +168,5 @@ Next ==
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 19:39:45 CST 2021 by hengxin
+\* Last modified Sun Jun 13 20:02:41 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin

@@ -11,7 +11,7 @@
     <stringAttribute key="modelBehaviorNext" value=""/>
     <stringAttribute key="modelBehaviorSpec" value=""/>
     <intAttribute key="modelBehaviorSpecType" value="0"/>
-    <stringAttribute key="modelBehaviorVars" value="phase, txn, dec, vote, next"/>
+    <stringAttribute key="modelBehaviorVars" value="phase, txn, msg, dec, submitted, vote, next"/>
     <stringAttribute key="modelComments" value=""/>
     <booleanAttribute key="modelCorrectnessCheckDeadlock" value="true"/>
     <listAttribute key="modelCorrectnessInvariants"/>
