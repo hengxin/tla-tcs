@@ -91,11 +91,10 @@ ComputeVote(t, s, n) ==
                   /\ phase[s][k] = "PREPARED"
                   /\ vote[s][k] = "COMMIT"}
         pt == {txn[s][k] : k \in ps} \* "prepared to commit" transactions
-        gv == "ABORT"
-\*        gv == IF \A k \in KeyOnShard(s), v \in Ver:
-\*                  /\ <<k, v>> \in RSet[t] => (\A p \in pt : k \notin WSet[p])
-\*                  /\ k \in WSet[t] => (\A p \in pt : <<k, v>> \notin RSet[p])
-\*              THEN "COMMIT" ELSE "ABORT"
+        gv == IF \A k \in KeyOnShard(s), v \in Ver:
+                  /\ <<k, v>> \in RSet[t] => (\A p \in pt : k \notin WSet[p])
+                  /\ k \in WSet[t] => (\A p \in pt : <<k, v>> \notin RSet[p])
+              THEN "COMMIT" ELSE "ABORT"
      IN IF fv = "COMMIT" /\ gv = "COMMIT" THEN "COMMIT" ELSE "ABORT"
 
 ComputeDecision(vs) ==
@@ -155,5 +154,5 @@ Next ==
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 18:09:18 CST 2021 by hengxin
+\* Last modified Sun Jun 13 19:13:20 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin
