@@ -2,7 +2,8 @@
 (*
 See DISC'2018: Multi-Shot Distributed Transaction Commit
 *)
-EXTENDS Naturals, Integers, FiniteSets, Sequences, Functions, TLC
+EXTENDS Naturals, Integers, FiniteSets, Sequences, Functions, TLC,
+        FiniteSetsExt
 ----------------------------------------------------------------------------
 CONSTANTS
     Key,      \* the set of keys, ranged over by k \in Key
@@ -46,7 +47,7 @@ vars == <<next, txn, vote, dec, phase, msg, submitted>>
 ----------------------------------------------------------------------------
 Message == [type : {"PREPARE"}, t : Tid, s : Shard]
     \cup [type : {"PREPARE_ACK"}, s : Shard, n : Int, t : Tid, v : {"COMMIT", "ABORT"}]
-    \cup [type : {"DECISION"}, pos : Int, d : {"COMMIT", "ABORT"}, s : Shard]
+    \cup [type : {"DECISION"}, p : Int, d : {"COMMIT", "ABORT"}, s : Shard]
 
 Send(m) == msg' = msg \cup m
 Delete(m) == msg' = msg \ m
@@ -71,6 +72,7 @@ Init ==
     /\ submitted = {}
 ----------------------------------------------------------------------------
 Vote(t, s, n) == "ABORT" \* TODO
+Decision(ms) == "ABORT" \* TODO
 ----------------------------------------------------------------------------
 Certify(t) == \* Certify t \in Tid
     /\ t \in Tid \ submitted
@@ -85,16 +87,38 @@ Prepare(t, s) == \* Prepare t \in Tid on s \in Shard when receive "PREPARE(t)" m
         /\ txn' = [txn EXCEPT ![s][next'[s]] = t]
         /\ vote' = [vote EXCEPT ![s][next'[s]] = Vote(t, s, next'[s])] \* TODO
         /\ phase' = [phase EXCEPT ![s][next'[s]] = "PREPARED"]
-        /\ SendAndDelete({[type |-> "PREPARE_ACK", s |-> s, n |-> next'[s],
-                              t |-> t, v |-> vote'[s][next'[s]]]}, {m})
+        /\ SendAndDelete({[type |-> "PREPARE_ACK",
+                              s |-> s,
+                              n |-> next'[s],
+                              t |-> t,
+                              v |-> vote'[s][next'[s]]]},
+                         {m})
     /\ UNCHANGED <<dec, submitted>>
+
+Pos(t, s) ==
+    LET m == ChooseUnique(msg, LAMBDA m : m.type = "PREPARE_ACK" /\ m.t = t /\ m.s = s)
+     IN m.n
+     
+PrepareAck(t, s) ==
+    /\ s = Coord[t]
+    /\ LET ms == {m \in msg : m.type = "PREPARE_ACK" /\ m.t = t}
+       shards == {m.s : m \in ms}
+        IN /\ shards = TSharding(t)
+           /\ SendAndDelete({[type |-> "DECISION",
+                                 p |-> Pos(t, shard),
+                                 d |-> Decision(ms),
+                                 s |-> shard] : shard \in shards}, 
+                         ms)
+    /\ UNCHANGED <<sVars, submitted>>
 ----------------------------------------------------------------------------
 Next ==
     \/ \E t \in Tid: Certify(t)
-    \/ \E t \in Tid, s \in Shard: Prepare(t, s)
+    \/ \E t \in Tid, s \in Shard:
+        \/ Prepare(t, s)
+        \/ PrepareAck(t, s)
 
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 11:30:53 CST 2021 by hengxin
+\* Last modified Sun Jun 13 12:25:10 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin

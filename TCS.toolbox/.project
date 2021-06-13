@@ -16,6 +16,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>FiniteSetsExt.tla</name>
+			<type>1</type>
+			<location>/home/hengxin/Documents/git-projects/tlaplus/tla-tcs/FiniteSetsExt.tla</location>
+		</link>
+		<link>
 			<name>Functions.tla</name>
 			<type>1</type>
 			<location>/home/hengxin/Documents/git-projects/tlaplus/tla-tcs/Functions.tla</location>

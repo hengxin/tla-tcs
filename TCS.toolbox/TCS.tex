@@ -947,133 +947,134 @@ See \ensuremath{DISC\.{'}}2018: Multi-Shot Distributed Transaction Commit
 \end{cpar}%
 \end{lcom}%
  \@x{\makebox[0pt][r]{\scriptsize 5\hspace{1em}} {\EXTENDS} Naturals ,\,
- Integers ,\, FiniteSets ,\, Sequences ,\, Functions ,\, TLC}%
-\@x{\makebox[0pt][r]{\scriptsize 6\hspace{1em}}}\midbar\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 7\hspace{1em}} {\CONSTANTS}}%
-\@x{\makebox[0pt][r]{\scriptsize 8\hspace{1em}}\@s{16.4} Key ,\,\@s{20.98}}%
+ Integers ,\, FiniteSets ,\, Sequences ,\, Functions ,\, TLC ,\,}%
+\@x{\makebox[0pt][r]{\scriptsize 6\hspace{1em}}\@s{43.93} FiniteSetsExt}%
+\@x{\makebox[0pt][r]{\scriptsize 7\hspace{1em}}}\midbar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 8\hspace{1em}} {\CONSTANTS}}%
+\@x{\makebox[0pt][r]{\scriptsize 9\hspace{1em}}\@s{16.4} Key ,\,\@s{20.98}}%
 \@y{\@s{0}%
  the set of keys, ranged over by \ensuremath{k \.{\in} Key
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 9\hspace{1em}}\@s{16.4} Tid ,\,\@s{22.64}}%
+\@x{\makebox[0pt][r]{\scriptsize 10\hspace{1em}}\@s{16.4} Tid ,\,\@s{22.64}}%
 \@y{\@s{0}%
  the set of transaction identifiers, ranged over by \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 10\hspace{1em}}\@s{16.4} RSet ,\,\@s{17.22}}%
+\@x{\makebox[0pt][r]{\scriptsize 11\hspace{1em}}\@s{16.4} RSet ,\,\@s{17.22}}%
 \@y{\@s{0}%
  \ensuremath{RSet[t]}: the read set of \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 11\hspace{1em}}\@s{16.4} WSet ,\,\@s{14.53}}%
+\@x{\makebox[0pt][r]{\scriptsize 12\hspace{1em}}\@s{16.4} WSet ,\,\@s{14.53}}%
 \@y{\@s{0}%
  \ensuremath{WSet[t]}: the write set of \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 12\hspace{1em}}\@s{16.4} CVer ,\,\@s{15.30}}%
+\@x{\makebox[0pt][r]{\scriptsize 13\hspace{1em}}\@s{16.4} CVer ,\,\@s{15.30}}%
 \@y{\@s{0}%
  \ensuremath{CVer[t]}: the commit version of \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 13\hspace{1em}}\@s{16.4} Shard
+ \@x{\makebox[0pt][r]{\scriptsize 14\hspace{1em}}\@s{16.4} Shard
  ,\,\@s{13.32}}%
 \@y{\@s{0}%
- the set of shards, ranged over by \ensuremath{s \.{\in} Shard
+ the set of \ensuremath{shards}, ranged over by \ensuremath{s \.{\in} Shard
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 14\hspace{1em}}\@s{16.4} Coord
+ \@x{\makebox[0pt][r]{\scriptsize 15\hspace{1em}}\@s{16.4} Coord
  ,\,\@s{12.29}}%
 \@y{\@s{0}%
  \ensuremath{Coord[t]}: the coordinator of \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 15\hspace{1em}}\@s{16.4}
+ \@x{\makebox[0pt][r]{\scriptsize 16\hspace{1em}}\@s{16.4}
  KeySharding\@s{4.1}}%
 \@y{\@s{0}%
  \ensuremath{KeySharding[k]}: the shard that holds \ensuremath{k \.{\in} Key
 }}%
 \@xx{}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 17\hspace{1em}} NotTid \.{\defeq} {\CHOOSE}
+ \@x{\makebox[0pt][r]{\scriptsize 18\hspace{1em}} NotTid \.{\defeq} {\CHOOSE}
  t \.{:} t \.{\notin} Tid}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 19\hspace{1em}} Ver \.{\defeq} 0 \.{\dotdot}
+ \@x{\makebox[0pt][r]{\scriptsize 20\hspace{1em}} Ver \.{\defeq} 0 \.{\dotdot}
  Cardinality ( Tid )}%
 \@y{\@s{0}%
  with a distinguished minimum version 0
 }%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 20\hspace{1em}} Slot \.{\defeq} 0
+ \@x{\makebox[0pt][r]{\scriptsize 21\hspace{1em}} Slot \.{\defeq} 0
  \.{\dotdot} Cardinality ( Tid ) \.{-} 1}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 22\hspace{1em}} TKey ( t ) \.{\defeq} WSet [
+ \@x{\makebox[0pt][r]{\scriptsize 23\hspace{1em}} TKey ( t ) \.{\defeq} WSet [
  t ] \.{\cup} \{ kv [ 1 ] \.{:} kv\@s{17.16} \.{\in} RSet [ t ] \}}%
- \@x{\makebox[0pt][r]{\scriptsize 23\hspace{1em}} TSharding ( t ) \.{\defeq}
+ \@x{\makebox[0pt][r]{\scriptsize 24\hspace{1em}} TSharding ( t ) \.{\defeq}
  \{ KeySharding [ k ] \.{:} k \.{\in} TKey ( t ) \}}%
 \@pvspace{8.0pt}%
-\@x{\makebox[0pt][r]{\scriptsize 25\hspace{1em}} {\ASSUME}}%
- \@x{\makebox[0pt][r]{\scriptsize 26\hspace{1em}}\@s{16.4} \.{\land} RSet
+\@x{\makebox[0pt][r]{\scriptsize 26\hspace{1em}} {\ASSUME}}%
+ \@x{\makebox[0pt][r]{\scriptsize 27\hspace{1em}}\@s{16.4} \.{\land} RSet
  \.{\in} [ Tid \.{\rightarrow} {\SUBSET} ( Key \.{\times} Ver ) ]}%
-\@x{\makebox[0pt][r]{\scriptsize 27\hspace{1em}}}%
+\@x{\makebox[0pt][r]{\scriptsize 28\hspace{1em}}}%
 \@y{\@s{7.5}%
  \ensuremath{\.{\land} \A\, t \.{\in} Tid}: \ensuremath{RSet[t]
  \.{\,\backslash\,}}* \ensuremath{TODO}: one version per object
 }%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 28\hspace{1em}}\@s{16.4} \.{\land} WSet
+ \@x{\makebox[0pt][r]{\scriptsize 29\hspace{1em}}\@s{16.4} \.{\land} WSet
  \.{\in} [ Tid \.{\rightarrow} {\SUBSET} Key ]}%
-\@x{\makebox[0pt][r]{\scriptsize 29\hspace{1em}}}%
+\@x{\makebox[0pt][r]{\scriptsize 30\hspace{1em}}}%
 \@y{\@s{7.5}%
  \ensuremath{\.{\land} \.{\,\backslash\,}}* \ensuremath{TODO}: ``no blind
  update'' assumption
 }%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 30\hspace{1em}}\@s{16.4} \.{\land} CVer
+ \@x{\makebox[0pt][r]{\scriptsize 31\hspace{1em}}\@s{16.4} \.{\land} CVer
  \.{\in} [ Tid \.{\rightarrow} Ver ]}%
-\@x{\makebox[0pt][r]{\scriptsize 31\hspace{1em}}}%
+\@x{\makebox[0pt][r]{\scriptsize 32\hspace{1em}}}%
 \@y{\@s{7.5}%
  \ensuremath{\.{\land} \.{\,\backslash\,}}* \ensuremath{TODO}: higher than
  any of the versions read
 }%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 32\hspace{1em}}\@s{16.4} \.{\land} Coord
+ \@x{\makebox[0pt][r]{\scriptsize 33\hspace{1em}}\@s{16.4} \.{\land} Coord
  \.{\in} [ Tid \.{\rightarrow} Shard ]}%
- \@x{\makebox[0pt][r]{\scriptsize 33\hspace{1em}}\@s{16.4} \.{\land}
+ \@x{\makebox[0pt][r]{\scriptsize 34\hspace{1em}}\@s{16.4} \.{\land}
  KeySharding \.{\in} [ Key \.{\rightarrow} Shard ]}%
-\@x{\makebox[0pt][r]{\scriptsize 34\hspace{1em}}}\midbar\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 35\hspace{1em}} {\VARIABLES}}%
-\@x{\makebox[0pt][r]{\scriptsize 36\hspace{1em}}\@s{16.4} next ,\,\@s{5.64}}%
+\@x{\makebox[0pt][r]{\scriptsize 35\hspace{1em}}}\midbar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 36\hspace{1em}} {\VARIABLES}}%
+\@x{\makebox[0pt][r]{\scriptsize 37\hspace{1em}}\@s{16.4} next ,\,\@s{5.64}}%
 \@y{\@s{0}%
  \ensuremath{next[s] \.{\in} Z} points to the last filled slot
 }%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 37\hspace{1em}}\@s{16.4} txn ,\,\@s{10.42}}%
+\@x{\makebox[0pt][r]{\scriptsize 38\hspace{1em}}\@s{16.4} txn ,\,\@s{10.42}}%
 \@y{\@s{0}%
  \ensuremath{txn[s][i]} is the transaction (identifier) to certify in the
  \ensuremath{i}-th slot
 }%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 38\hspace{1em}}\@s{16.4} vote ,\,\@s{6.38}}%
+\@x{\makebox[0pt][r]{\scriptsize 39\hspace{1em}}\@s{16.4} vote ,\,\@s{6.38}}%
 \@y{\@s{0}%
  \ensuremath{vote[s][i]} is the vote for \ensuremath{txn[s][i]
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 39\hspace{1em}}\@s{16.4} dec ,\,\@s{10.40}}%
+\@x{\makebox[0pt][r]{\scriptsize 40\hspace{1em}}\@s{16.4} dec ,\,\@s{10.40}}%
 \@y{\@s{0}%
  \ensuremath{dec[s][i]} is the decision for \ensuremath{txn[s][i]
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 40\hspace{1em}}\@s{16.4} phase ,\,}%
+\@x{\makebox[0pt][r]{\scriptsize 41\hspace{1em}}\@s{16.4} phase ,\,}%
 \@y{\@s{0}%
  \ensuremath{phase[s][i]} is the phase for \ensuremath{txn[s][i]
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 41\hspace{1em}}\@s{16.4} msg ,\,\@s{7.02}}%
+\@x{\makebox[0pt][r]{\scriptsize 42\hspace{1em}}\@s{16.4} msg ,\,\@s{7.02}}%
 \@y{\@s{0}%
  the set of messages in transit
 }%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 42\hspace{1em}}\@s{16.4}
+ \@x{\makebox[0pt][r]{\scriptsize 43\hspace{1em}}\@s{16.4}
  submitted\@s{12.29}}%
 \@y{\@s{0}%
  the set of \ensuremath{t \.{\in} Tid} that have been submitted to
@@ -1081,130 +1082,175 @@ See \ensuremath{DISC\.{'}}2018: Multi-Shot Distributed Transaction Commit
 }}%
 \@xx{}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 44\hspace{1em}} sVars \.{\defeq} {\langle}
+ \@x{\makebox[0pt][r]{\scriptsize 45\hspace{1em}} sVars \.{\defeq} {\langle}
  next ,\, txn ,\, vote ,\, dec ,\, phase {\rangle}}%
- \@x{\makebox[0pt][r]{\scriptsize 45\hspace{1em}} vars \.{\defeq} {\langle}
+ \@x{\makebox[0pt][r]{\scriptsize 46\hspace{1em}} vars \.{\defeq} {\langle}
  next ,\, txn ,\, vote ,\, dec ,\, phase ,\, msg ,\, submitted {\rangle}}%
-\@x{\makebox[0pt][r]{\scriptsize 46\hspace{1em}}}\midbar\@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 47\hspace{1em}} Message \.{\defeq} [ type
+\@x{\makebox[0pt][r]{\scriptsize 47\hspace{1em}}}\midbar\@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 48\hspace{1em}} Message \.{\defeq} [ type
  \.{:} \{\@w{PREPARE} \} ,\, t \.{:} Tid ,\, s \.{:} Shard ]}%
- \@x{\makebox[0pt][r]{\scriptsize 48\hspace{1em}}\@s{16.4} \.{\cup} [ type
+ \@x{\makebox[0pt][r]{\scriptsize 49\hspace{1em}}\@s{16.4} \.{\cup} [ type
  \.{:} \{\@w{PREPARE\_ACK} \} ,\, s \.{:} Shard ,\, n \.{:} Int ,\, t \.{:}
  Tid ,\, v \.{:} \{\@w{COMMIT} ,\,\@w{ABORT} \} ]}%
- \@x{\makebox[0pt][r]{\scriptsize 49\hspace{1em}}\@s{16.4} \.{\cup} [ type
- \.{:} \{\@w{DECISION} \} ,\, pos \.{:} Int ,\, d \.{:} \{\@w{COMMIT}
+ \@x{\makebox[0pt][r]{\scriptsize 50\hspace{1em}}\@s{16.4} \.{\cup} [ type
+ \.{:} \{\@w{DECISION} \} ,\, p \.{:} Int ,\, d \.{:} \{\@w{COMMIT}
  ,\,\@w{ABORT} \} ,\, s \.{:} Shard ]}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 51\hspace{1em}} Send ( m ) \.{\defeq} msg
+ \@x{\makebox[0pt][r]{\scriptsize 52\hspace{1em}} Send ( m ) \.{\defeq} msg
  \.{'} \.{=} msg \.{\cup} m}%
- \@x{\makebox[0pt][r]{\scriptsize 52\hspace{1em}} Delete ( m ) \.{\defeq} msg
+ \@x{\makebox[0pt][r]{\scriptsize 53\hspace{1em}} Delete ( m ) \.{\defeq} msg
  \.{'} \.{=} msg \.{\,\backslash\,} m}%
- \@x{\makebox[0pt][r]{\scriptsize 53\hspace{1em}} SendAndDelete ( sm ,\, dm )
+ \@x{\makebox[0pt][r]{\scriptsize 54\hspace{1em}} SendAndDelete ( sm ,\, dm )
  \.{\defeq} msg \.{'} \.{=} ( msg \.{\cup} sm ) \.{\,\backslash\,} dm}%
-\@x{\makebox[0pt][r]{\scriptsize 54\hspace{1em}}}\midbar\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 55\hspace{1em}} TypeOK \.{\defeq}}%
- \@x{\makebox[0pt][r]{\scriptsize 56\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
- next \.{\in} [ Shard \.{\rightarrow} Int ]}%
+\@x{\makebox[0pt][r]{\scriptsize 55\hspace{1em}}}\midbar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 56\hspace{1em}} TypeOK \.{\defeq}}%
  \@x{\makebox[0pt][r]{\scriptsize 57\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
+ next \.{\in} [ Shard \.{\rightarrow} Int ]}%
+ \@x{\makebox[0pt][r]{\scriptsize 58\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  txn \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} Tid \.{\cup} \{
  NotTid \} ] ]}%
- \@x{\makebox[0pt][r]{\scriptsize 58\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
+ \@x{\makebox[0pt][r]{\scriptsize 59\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  vote \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} \{\@w{COMMIT}
  ,\,\@w{ABORT} ,\,\@w{NULL} \} ] ]}%
- \@x{\makebox[0pt][r]{\scriptsize 59\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
+ \@x{\makebox[0pt][r]{\scriptsize 60\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  dec \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} \{\@w{COMMIT}
  ,\,\@w{ABORT} ,\,\@w{NULL} \} ] ]}%
- \@x{\makebox[0pt][r]{\scriptsize 60\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
+ \@x{\makebox[0pt][r]{\scriptsize 61\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  phase \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} \{\@w{START}
  ,\,\@w{PREPARED} ,\,\@w{DECIDED} \} ] ]}%
- \@x{\makebox[0pt][r]{\scriptsize 61\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
- msg \.{\subseteq} Message}%
  \@x{\makebox[0pt][r]{\scriptsize 62\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
+ msg \.{\subseteq} Message}%
+ \@x{\makebox[0pt][r]{\scriptsize 63\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  submitted \.{\subseteq} Tid}%
-\@x{\makebox[0pt][r]{\scriptsize 63\hspace{1em}}}\midbar\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 64\hspace{1em}} Init \.{\defeq}}%
- \@x{\makebox[0pt][r]{\scriptsize 65\hspace{1em}}\@s{16.4} \.{\land} next
+\@x{\makebox[0pt][r]{\scriptsize 64\hspace{1em}}}\midbar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 65\hspace{1em}} Init \.{\defeq}}%
+ \@x{\makebox[0pt][r]{\scriptsize 66\hspace{1em}}\@s{16.4} \.{\land} next
  \.{=} [ s \.{\in} Shard \.{\mapsto} \.{-} 1 ]}%
- \@x{\makebox[0pt][r]{\scriptsize 66\hspace{1em}}\@s{16.4} \.{\land} txn \.{=}
+ \@x{\makebox[0pt][r]{\scriptsize 67\hspace{1em}}\@s{16.4} \.{\land} txn \.{=}
  [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto} NotTid ] ]}%
- \@x{\makebox[0pt][r]{\scriptsize 67\hspace{1em}}\@s{16.4} \.{\land} vote
+ \@x{\makebox[0pt][r]{\scriptsize 68\hspace{1em}}\@s{16.4} \.{\land} vote
  \.{=} [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto}\@w{NULL} ]
  ]}%
- \@x{\makebox[0pt][r]{\scriptsize 68\hspace{1em}}\@s{16.4} \.{\land} dec \.{=}
+ \@x{\makebox[0pt][r]{\scriptsize 69\hspace{1em}}\@s{16.4} \.{\land} dec \.{=}
  [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto}\@w{NULL} ] ]}%
- \@x{\makebox[0pt][r]{\scriptsize 69\hspace{1em}}\@s{16.4} \.{\land} phase
+ \@x{\makebox[0pt][r]{\scriptsize 70\hspace{1em}}\@s{16.4} \.{\land} phase
  \.{=} [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto}\@w{START} ]
  ]}%
- \@x{\makebox[0pt][r]{\scriptsize 70\hspace{1em}}\@s{16.4} \.{\land} msg \.{=}
+ \@x{\makebox[0pt][r]{\scriptsize 71\hspace{1em}}\@s{16.4} \.{\land} msg \.{=}
  \{ \}}%
- \@x{\makebox[0pt][r]{\scriptsize 71\hspace{1em}}\@s{16.4} \.{\land} submitted
+ \@x{\makebox[0pt][r]{\scriptsize 72\hspace{1em}}\@s{16.4} \.{\land} submitted
  \.{=} \{ \}}%
-\@x{\makebox[0pt][r]{\scriptsize 72\hspace{1em}}}\midbar\@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 73\hspace{1em}} Vote ( t ,\, s ,\, n )
+\@x{\makebox[0pt][r]{\scriptsize 73\hspace{1em}}}\midbar\@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 74\hspace{1em}} Vote ( t ,\, s ,\, n )
  \.{\defeq}\@w{ABORT}}%
 \@y{\@s{0}%
  \ensuremath{TODO
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 74\hspace{1em}}}\midbar\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 75\hspace{1em}} Certify ( t ) \.{\defeq}}%
+ \@x{\makebox[0pt][r]{\scriptsize 75\hspace{1em}} Decision ( ms )
+ \.{\defeq}\@w{ABORT}}%
+\@y{\@s{0}%
+ \ensuremath{TODO
+}}%
+\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 76\hspace{1em}}}\midbar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 77\hspace{1em}} Certify ( t ) \.{\defeq}}%
 \@y{\@s{0}%
  Certify \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 76\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
+ \@x{\makebox[0pt][r]{\scriptsize 78\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
  t \.{\in} Tid \.{\,\backslash\,} submitted}%
- \@x{\makebox[0pt][r]{\scriptsize 77\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
+ \@x{\makebox[0pt][r]{\scriptsize 79\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
  Send ( [ type \.{:} \{\@w{PREPARE} \} ,\, t \.{:} \{ t \} ,\, s \.{:}
  TSharding ( t ) ] )}%
- \@x{\makebox[0pt][r]{\scriptsize 78\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
+ \@x{\makebox[0pt][r]{\scriptsize 80\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
  submitted \.{'} \.{=} submitted \.{\cup} \{ t \}}%
- \@x{\makebox[0pt][r]{\scriptsize 79\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
+ \@x{\makebox[0pt][r]{\scriptsize 81\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
  {\UNCHANGED} sVars}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 81\hspace{1em}} Prepare ( t ,\, s )
+ \@x{\makebox[0pt][r]{\scriptsize 83\hspace{1em}} Prepare ( t ,\, s )
  \.{\defeq}}%
 \@y{\@s{0}%
  Prepare \ensuremath{t \.{\in} Tid} on \ensuremath{s \.{\in} Shard} when
  receive ``\ensuremath{PREPARE(t)}'' message
 }%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 82\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
+ \@x{\makebox[0pt][r]{\scriptsize 84\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
  \E\, m \.{\in} msg \.{:}}%
- \@x{\makebox[0pt][r]{\scriptsize 83\hspace{1em}}\@s{37.95} \.{\land} m \.{=}
+ \@x{\makebox[0pt][r]{\scriptsize 85\hspace{1em}}\@s{37.95} \.{\land} m \.{=}
  [ type \.{\mapsto}\@w{PREPARE} ,\, t \.{\mapsto} t ,\, s \.{\mapsto} s ]}%
- \@x{\makebox[0pt][r]{\scriptsize 84\hspace{1em}}\@s{37.95} \.{\land} next
+ \@x{\makebox[0pt][r]{\scriptsize 86\hspace{1em}}\@s{37.95} \.{\land} next
  \.{'} \.{=} [ next {\EXCEPT} {\bang} [ s ] \.{=} @ \.{+} 1 ]}%
- \@x{\makebox[0pt][r]{\scriptsize 85\hspace{1em}}\@s{37.95} \.{\land} txn
+ \@x{\makebox[0pt][r]{\scriptsize 87\hspace{1em}}\@s{37.95} \.{\land} txn
  \.{'} \.{=} [ txn {\EXCEPT} {\bang} [ s ] [ next \.{'} [ s ] ] \.{=} t ]}%
- \@x{\makebox[0pt][r]{\scriptsize 86\hspace{1em}}\@s{37.95} \.{\land} vote
+ \@x{\makebox[0pt][r]{\scriptsize 88\hspace{1em}}\@s{37.95} \.{\land} vote
  \.{'} \.{=} [ vote {\EXCEPT} {\bang} [ s ] [ next \.{'} [ s ] ] \.{=} Vote (
  t ,\, s ,\, next \.{'} [ s ] ) ]}%
 \@y{\@s{0}%
  \ensuremath{TODO
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 87\hspace{1em}}\@s{37.95} \.{\land} phase
+ \@x{\makebox[0pt][r]{\scriptsize 89\hspace{1em}}\@s{37.95} \.{\land} phase
  \.{'} \.{=} [ phase {\EXCEPT} {\bang} [ s ] [ next \.{'} [ s ] ]
  \.{=}\@w{PREPARED} ]}%
- \@x{\makebox[0pt][r]{\scriptsize 88\hspace{1em}}\@s{37.95} \.{\land}
- SendAndDelete ( \{ [ type \.{\mapsto}\@w{PREPARE\_ACK} ,\, s \.{\mapsto} s
- ,\, n \.{\mapsto} next \.{'} [ s ] ,\,}%
- \@x{\makebox[0pt][r]{\scriptsize 89\hspace{1em}}\@s{139.87} t\@s{1.55}
- \.{\mapsto} t ,\, v \.{\mapsto} vote \.{'} [ s ] [ next \.{'} [ s ] ] ] \}
- ,\, \{ m \} )}%
- \@x{\makebox[0pt][r]{\scriptsize 90\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
+ \@x{\makebox[0pt][r]{\scriptsize 90\hspace{1em}}\@s{37.95} \.{\land}
+ SendAndDelete ( \{ [ type\@s{0.56} \.{\mapsto}\@w{PREPARE\_ACK} ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 91\hspace{1em}}\@s{139.87} s\@s{1.47}
+ \.{\mapsto} s ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 92\hspace{1em}}\@s{139.87} n \.{\mapsto}
+ next \.{'} [ s ] ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 93\hspace{1em}}\@s{139.87} t\@s{2.11}
+ \.{\mapsto} t ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 94\hspace{1em}}\@s{139.87} v\@s{0.71}
+ \.{\mapsto} vote \.{'} [ s ] [ next \.{'} [ s ] ] ] \} ,\,}%
+\@x{\makebox[0pt][r]{\scriptsize 95\hspace{1em}}\@s{119.80} \{ m \} )}%
+ \@x{\makebox[0pt][r]{\scriptsize 96\hspace{1em}}\@s{16.4} \.{\land}\@s{6.34}
  {\UNCHANGED} {\langle} dec ,\, submitted {\rangle}}%
-\@x{\makebox[0pt][r]{\scriptsize 91\hspace{1em}}}\midbar\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 92\hspace{1em}} Next \.{\defeq}}%
- \@x{\makebox[0pt][r]{\scriptsize 93\hspace{1em}}\@s{16.4} \.{\lor} \E\, t
- \.{\in} Tid \.{:} Certify ( t )}%
- \@x{\makebox[0pt][r]{\scriptsize 94\hspace{1em}}\@s{16.4} \.{\lor} \E\, t
- \.{\in} Tid ,\, s \.{\in} Shard \.{:} Prepare ( t ,\, s )}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 96\hspace{1em}} Spec \.{\defeq} Init
+ \@x{\makebox[0pt][r]{\scriptsize 98\hspace{1em}} Pos ( t ,\, s )\@s{10.16}
+ \.{\defeq}}%
+ \@x{\makebox[0pt][r]{\scriptsize 99\hspace{1em}}\@s{20.69} \.{\LET} m
+ \.{\defeq} ChooseUnique ( msg ,\, {\LAMBDA} m \.{:} m . type
+ \.{=}\@w{PREPARE\_ACK} \.{\land} m . t \.{=} t \.{\land} m . s \.{=} s )}%
+\@x{\makebox[0pt][r]{\scriptsize 100\hspace{1em}}\@s{24.79} \.{\IN} m . n}%
+\@pvspace{8.0pt}%
+ \@x{\makebox[0pt][r]{\scriptsize 102\hspace{1em}} PrepareAck ( t ,\, s )
+ \.{\defeq}}%
+ \@x{\makebox[0pt][r]{\scriptsize 103\hspace{1em}}\@s{16.4} \.{\land} s \.{=}
+ Coord [ t ]}%
+ \@x{\makebox[0pt][r]{\scriptsize 104\hspace{1em}}\@s{16.4} \.{\land} \.{\LET}
+ ms \.{\defeq} \{ m \.{\in} msg \.{:} m . type \.{=}\@w{PREPARE\_ACK}
+ \.{\land} m . t \.{=} t \}}%
+ \@x{\makebox[0pt][r]{\scriptsize 105\hspace{1em}}\@s{27.51} shards\@s{5.44}
+ \.{\defeq} \{ m . s \.{:} m \.{\in} ms \}}%
+ \@x{\makebox[0pt][r]{\scriptsize 106\hspace{1em}}\@s{31.61} \.{\IN} \.{\land}
+ shards \.{=} TSharding ( t )}%
+ \@x{\makebox[0pt][r]{\scriptsize 107\hspace{1em}}\@s{52.01} \.{\land}
+ SendAndDelete ( \{ [ type\@s{0.31} \.{\mapsto}\@w{DECISION} ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 108\hspace{1em}}\@s{153.93} p\@s{0.40}
+ \.{\mapsto} Pos ( t ,\, shard ) ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 109\hspace{1em}}\@s{153.93} d \.{\mapsto}
+ Decision ( ms ) ,\,}%
+ \@x{\makebox[0pt][r]{\scriptsize 110\hspace{1em}}\@s{153.93} s\@s{1.23}
+ \.{\mapsto} shard ] \.{:} shard \.{\in} shards \} ,\,}%
+\@x{\makebox[0pt][r]{\scriptsize 111\hspace{1em}}\@s{108.22} ms )}%
+ \@x{\makebox[0pt][r]{\scriptsize 112\hspace{1em}}\@s{16.4} \.{\land}
+ {\UNCHANGED} {\langle} sVars ,\, submitted {\rangle}}%
+\@x{\makebox[0pt][r]{\scriptsize 113\hspace{1em}}}\midbar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 114\hspace{1em}} Next \.{\defeq}}%
+ \@x{\makebox[0pt][r]{\scriptsize 115\hspace{1em}}\@s{16.4} \.{\lor} \E\, t
+ \.{\in} Tid \.{:} Certify ( t )}%
+ \@x{\makebox[0pt][r]{\scriptsize 116\hspace{1em}}\@s{16.4} \.{\lor} \E\, t
+ \.{\in} Tid ,\, s \.{\in} Shard \.{:}}%
+ \@x{\makebox[0pt][r]{\scriptsize 117\hspace{1em}}\@s{31.61} \.{\lor} Prepare
+ ( t ,\, s )}%
+ \@x{\makebox[0pt][r]{\scriptsize 118\hspace{1em}}\@s{31.61} \.{\lor}
+ PrepareAck ( t ,\, s )}%
+\@pvspace{8.0pt}%
+ \@x{\makebox[0pt][r]{\scriptsize 120\hspace{1em}} Spec \.{\defeq} Init
  \.{\land} {\Box} [ Next ]_{ vars}}%
-\@x{\makebox[0pt][r]{\scriptsize 97\hspace{1em}}}\bottombar\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 121\hspace{1em}}}\bottombar\@xx{}%
 \setboolean{shading}{false}
 \begin{lcom}{0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
@@ -1212,7 +1258,7 @@ See \ensuremath{DISC\.{'}}2018: Multi-Shot Distributed Transaction Commit
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
  \ensuremath{\.{\,\backslash\,}}* Last modified Sun \ensuremath{Jun} 13
- 11:30:53 \ensuremath{CST} 2021 by \ensuremath{hengxin
+ 12:25:10 \ensuremath{CST} 2021 by \ensuremath{hengxin
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
