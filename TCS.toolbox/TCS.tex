@@ -950,84 +950,97 @@ See DISC\mbox{'}2018: Multi-Shot Distributed Transaction Commit
  Integers ,\, FiniteSets ,\, Sequences ,\, Functions ,\, TLC}%
 \@x{\makebox[0pt][r]{\scriptsize 6\hspace{1em}}}\midbar\@xx{}%
 \@x{\makebox[0pt][r]{\scriptsize 7\hspace{1em}} {\CONSTANTS}}%
-\@x{\makebox[0pt][r]{\scriptsize 8\hspace{1em}}\@s{16.4} Key ,\,\@s{24.58}}%
+\@x{\makebox[0pt][r]{\scriptsize 8\hspace{1em}}\@s{16.4} Key ,\,\@s{20.98}}%
 \@y{\@s{0}%
  the set of keys, ranged over by \ensuremath{k \.{\in} Key
 }}%
 \@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 9\hspace{1em}}\@s{16.4} Val ,\,\@s{27.24}}%
+\@x{\makebox[0pt][r]{\scriptsize 9\hspace{1em}}\@s{16.4} Tid ,\,\@s{22.64}}%
 \@y{\@s{0}%
- the set of values, ranged over by \ensuremath{v \.{\in} Val
+ the set of transaction identifiers, ranged over by \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 10\hspace{1em}}\@s{16.4} Trans
- ,\,\@s{16.87}}%
+\@x{\makebox[0pt][r]{\scriptsize 10\hspace{1em}}\@s{16.4} RSet ,\,\@s{17.22}}%
 \@y{\@s{0}%
- the set of transactions, ranged over by \ensuremath{t \.{\in} Trans
+ \ensuremath{RSet[t]}: the read set of \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 11\hspace{1em}}\@s{16.4} Shard
- ,\,\@s{16.91}}%
+\@x{\makebox[0pt][r]{\scriptsize 11\hspace{1em}}\@s{16.4} WSet ,\,\@s{14.53}}%
+\@y{\@s{0}%
+ \ensuremath{WSet[t]}: the write set of \ensuremath{t \.{\in} Tid
+}}%
+\@xx{}%
+\@x{\makebox[0pt][r]{\scriptsize 12\hspace{1em}}\@s{16.4} CVer ,\,\@s{15.30}}%
+\@y{\@s{0}%
+ \ensuremath{CVer[t]}: the commit version of \ensuremath{t \.{\in} Tid
+}}%
+\@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 13\hspace{1em}}\@s{16.4} Shard
+ ,\,\@s{13.32}}%
 \@y{\@s{0}%
  the set of shards, ranged over by \ensuremath{s \.{\in} Shard
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 12\hspace{1em}}\@s{16.4} Client
- ,\,\@s{15.34}}%
+ \@x{\makebox[0pt][r]{\scriptsize 14\hspace{1em}}\@s{16.4} Coord
+ ,\,\@s{12.29}}%
 \@y{\@s{0}%
- the set of clients, ranged over by \ensuremath{c \.{\in} Client
+ \ensuremath{Coord[t]}: the coordinator of \ensuremath{t \.{\in} Tid
 }}%
 \@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 13\hspace{1em}}\@s{16.4} TxCoord
- ,\,\@s{4.09}}%
-\@y{\@s{0}%
- \ensuremath{TxCoord(t)} is the coordinator of \ensuremath{t \.{\in} Trans
-}}%
-\@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 14\hspace{1em}}\@s{16.4}
+ \@x{\makebox[0pt][r]{\scriptsize 15\hspace{1em}}\@s{16.4}
  KeySharding\@s{4.1}}%
 \@y{\@s{0}%
- \ensuremath{KeySharding(k)} is the shard that holds \ensuremath{k \.{\in} Key
+ \ensuremath{KeySharding[k]}: the shard that holds \ensuremath{k \.{\in} Key
 }}%
 \@xx{}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 16\hspace{1em}} Slot \.{\defeq} 1
- \.{\dotdot} Cardinality ( Trans )}%
+ \@x{\makebox[0pt][r]{\scriptsize 17\hspace{1em}} NotTid \.{\defeq} {\CHOOSE}
+ t \.{:} t \.{\notin} Tid}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 18\hspace{1em}} NotVal \.{\defeq} {\CHOOSE}
- v \.{:} v \.{\notin} Val}%
- \@x{\makebox[0pt][r]{\scriptsize 19\hspace{1em}} NotTrans \.{\defeq}
- {\CHOOSE} t \.{:} t \.{\notin} Trans}%
-\@pvspace{8.0pt}%
-\@x{\makebox[0pt][r]{\scriptsize 21\hspace{1em}} {\ASSUME}}%
- \@x{\makebox[0pt][r]{\scriptsize 22\hspace{1em}}\@s{16.4} \.{\land} TxCoord
- \.{\in} [ Trans \.{\rightarrow} Shard ]}%
- \@x{\makebox[0pt][r]{\scriptsize 23\hspace{1em}}\@s{16.4} \.{\land}
- KeySharding \.{\in} [ Key \.{\rightarrow} Shard ]}%
-\@x{\makebox[0pt][r]{\scriptsize 24\hspace{1em}}}%
-\@y{\@s{2.5}%
- \ensuremath{\.{\land} \A\, t \.{\in} Trans}:
-}%
-\@xx{}%
-\@x{\makebox[0pt][r]{\scriptsize 25\hspace{1em}}}\midbar\@xx{}%
- \@x{\makebox[0pt][r]{\scriptsize 26\hspace{1em}} Op \.{\defeq} [ type \.{:}
- \{\@w{read} ,\,\@w{write} \} ,\, key \.{:} Key ,\, val \.{:} Val ]}%
- \@x{\makebox[0pt][r]{\scriptsize 27\hspace{1em}} R ( k ,\, v )\@s{4.14}
- \.{\defeq} [ type \.{\mapsto}\@w{read} ,\, key \.{\mapsto} k ,\, val
- \.{\mapsto} v ]}%
- \@x{\makebox[0pt][r]{\scriptsize 28\hspace{1em}} W ( k ,\, v ) \.{\defeq} [
- type \.{\mapsto}\@w{write} ,\, key \.{\mapsto} k ,\, val \.{\mapsto} v ]}%
-\@pvspace{8.0pt}%
-\@x{\makebox[0pt][r]{\scriptsize 30\hspace{1em}} {\ASSUME}}%
- \@x{\makebox[0pt][r]{\scriptsize 31\hspace{1em}}\@s{16.4} \.{\land} Trans
- \.{\in} Seq ( Op )\@s{4.1}}%
+ \@x{\makebox[0pt][r]{\scriptsize 19\hspace{1em}} Ver \.{\defeq} 0 \.{\dotdot}
+ Cardinality ( Tid )\@s{12.29}}%
 \@y{\@s{0}%
- A transaction is a sequence of operations.
+ with a distinguished minimum version 0
 }%
 \@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 20\hspace{1em}} Slot \.{\defeq} 1
+ \.{\dotdot} Cardinality ( Tid )}%
 \@pvspace{8.0pt}%
- \@x{\makebox[0pt][r]{\scriptsize 33\hspace{1em}} RS ( t ) \.{\defeq} \{ op .
- key \.{:} op \.{\in} Range ( t ) \}}%
+ \@x{\makebox[0pt][r]{\scriptsize 22\hspace{1em}} TKey ( t ) \.{\defeq} WSet [
+ t ] \.{\cup} \{ kv [ 1 ] \.{:} kv \.{\in} RSet [ t ] \}}%
+ \@x{\makebox[0pt][r]{\scriptsize 23\hspace{1em}} TSharding \.{\defeq} [ t
+ \.{\in} Tid \.{\mapsto} \{ KeySharding [ k ] \.{:} k \.{\in} TKey ( t ) \}
+ ]}%
+\@pvspace{8.0pt}%
+\@x{\makebox[0pt][r]{\scriptsize 25\hspace{1em}} {\ASSUME}}%
+ \@x{\makebox[0pt][r]{\scriptsize 26\hspace{1em}}\@s{16.4} \.{\land} RSet
+ \.{\in} [ Tid \.{\rightarrow} {\SUBSET} ( Key \.{\times} Ver ) ]}%
+\@x{\makebox[0pt][r]{\scriptsize 27\hspace{1em}}}%
+\@y{\@s{7.5}%
+ \ensuremath{\.{\land} \A\, t \.{\in} Tid}: \ensuremath{RSet[t]
+ \.{\,\backslash\,}}* \ensuremath{TODO}: one version per object
+}%
+\@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 28\hspace{1em}}\@s{16.4} \.{\land} WSet
+ \.{\in} [ Tid \.{\rightarrow} {\SUBSET} Key ]}%
+\@x{\makebox[0pt][r]{\scriptsize 29\hspace{1em}}}%
+\@y{\@s{7.5}%
+ \ensuremath{\.{\land} \.{\,\backslash\,}}* \ensuremath{TODO}: ``no blind
+ update'' assumption
+}%
+\@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 30\hspace{1em}}\@s{16.4} \.{\land} CVer
+ \.{\in} [ Tid \.{\rightarrow} Ver ]}%
+\@x{\makebox[0pt][r]{\scriptsize 31\hspace{1em}}}%
+\@y{\@s{7.5}%
+ \ensuremath{\.{\land} \.{\,\backslash\,}}* \ensuremath{TODO}: higher than
+ any of the versions read
+}%
+\@xx{}%
+ \@x{\makebox[0pt][r]{\scriptsize 32\hspace{1em}}\@s{16.4} \.{\land} Coord
+ \.{\in} [ Tid \.{\rightarrow} Shard ]}%
+ \@x{\makebox[0pt][r]{\scriptsize 33\hspace{1em}}\@s{16.4} \.{\land}
+ KeySharding \.{\in} [ Key \.{\rightarrow} Shard ]}%
 \@x{\makebox[0pt][r]{\scriptsize 34\hspace{1em}}}\midbar\@xx{}%
 \@x{\makebox[0pt][r]{\scriptsize 35\hspace{1em}} {\VARIABLES}}%
 \@x{\makebox[0pt][r]{\scriptsize 36\hspace{1em}}\@s{16.4} next ,\,\@s{4.1}}%
@@ -1037,7 +1050,7 @@ See DISC\mbox{'}2018: Multi-Shot Distributed Transaction Commit
 \@xx{}%
 \@x{\makebox[0pt][r]{\scriptsize 37\hspace{1em}}\@s{16.4} txn ,\,\@s{8.88}}%
 \@y{\@s{0}%
- \ensuremath{txn[s][i]} is the transaction to certify in the
+ \ensuremath{txn[s][i]} is the transaction (identifier) to certify in the
  \ensuremath{i}-th slot
 }%
 \@xx{}%
@@ -1064,8 +1077,8 @@ See DISC\mbox{'}2018: Multi-Shot Distributed Transaction Commit
  \@x{\makebox[0pt][r]{\scriptsize 45\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  next \.{\in} [ Shard \.{\rightarrow} Int ]}%
  \@x{\makebox[0pt][r]{\scriptsize 46\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
- txn \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} Trans \.{\cup} \{
- NotTrans \} ] ]}%
+ txn \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} Tid \.{\cup} \{
+ NotTid \} ] ]}%
  \@x{\makebox[0pt][r]{\scriptsize 47\hspace{1em}}\@s{16.4} \.{\land}\@s{9.74}
  vote \.{\in} [ Shard \.{\rightarrow} [ Slot \.{\rightarrow} \{\@w{COMMIT}
  ,\,\@w{ABORT} ,\,\@w{NULL} \} ] ]}%
@@ -1080,7 +1093,7 @@ See DISC\mbox{'}2018: Multi-Shot Distributed Transaction Commit
  \@x{\makebox[0pt][r]{\scriptsize 52\hspace{1em}}\@s{16.4} \.{\land} next
  \.{=} [ s \.{\in} Shard \.{\mapsto} \.{-} 1 ]}%
  \@x{\makebox[0pt][r]{\scriptsize 53\hspace{1em}}\@s{16.4} \.{\land} txn \.{=}
- [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto} NotTrans ] ]}%
+ [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto} NotTid ] ]}%
  \@x{\makebox[0pt][r]{\scriptsize 54\hspace{1em}}\@s{16.4} \.{\land} vote
  \.{=} [ s \.{\in} Shard \.{\mapsto} [ i \.{\in} Slot \.{\mapsto}\@w{NULL} ]
  ]}%
@@ -1093,8 +1106,7 @@ See DISC\mbox{'}2018: Multi-Shot Distributed Transaction Commit
  \@x{\makebox[0pt][r]{\scriptsize 58\hspace{1em}} Certify ( t ,\, s )
  \.{\defeq}}%
 \@y{\@s{0}%
- Cerify transaction \ensuremath{t \.{\in} Trans} on shard \ensuremath{s
- \.{\in} Shard
+ Cerify \ensuremath{t \.{\in} Tid} on shard \ensuremath{s \.{\in} Shard
 }}%
 \@xx{}%
  \@x{\makebox[0pt][r]{\scriptsize 59\hspace{1em}}\@s{16.4} \.{\land}\@s{3.65}
@@ -1111,8 +1123,8 @@ See DISC\mbox{'}2018: Multi-Shot Distributed Transaction Commit
 \ensuremath{\.{\,\backslash\,}}* Modification History
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{\.{\,\backslash\,}}* Last modified Sat \ensuremath{Jun} 12
- 22:14:42 \ensuremath{CST} 2021 by \ensuremath{hengxin
+ \ensuremath{\.{\,\backslash\,}}* Last modified Sun \ensuremath{Jun} 13
+ 10:22:37 \ensuremath{CST} 2021 by \ensuremath{hengxin
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%

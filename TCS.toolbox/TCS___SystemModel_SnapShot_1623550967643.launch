@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.lamport.tla.toolbox.tool.tlc.modelCheck">
-    <stringAttribute key="configurationName" value="SystemModel_SnapShot_1623504235649"/>
+    <stringAttribute key="configurationName" value="SystemModel_SnapShot_1623550967643"/>
     <intAttribute key="distributedFPSetCount" value="0"/>
     <stringAttribute key="distributedNetworkInterface" value="192.168.3.7"/>
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
-    <intAttribute key="fpIndex" value="83"/>
+    <intAttribute key="fpIndex" value="95"/>
     <intAttribute key="maxHeapSize" value="50"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
     <stringAttribute key="modelBehaviorSpec" value=""/>
     <intAttribute key="modelBehaviorSpecType" value="0"/>
-    <stringAttribute key="modelBehaviorVars" value=""/>
+    <stringAttribute key="modelBehaviorVars" value="phase, txn, dec, vote, next"/>
     <stringAttribute key="modelComments" value=""/>
     <booleanAttribute key="modelCorrectnessCheckDeadlock" value="true"/>
     <listAttribute key="modelCorrectnessInvariants"/>
     <listAttribute key="modelCorrectnessProperties"/>
+    <intAttribute key="modelEditorOpenTabs" value="2"/>
+    <stringAttribute key="modelParameterActionConstraint" value=""/>
     <listAttribute key="modelParameterConstants">
-        <listEntry value="Val;;{v1, v2};1;1"/>
-        <listEntry value="Trans;;{t1, t2};1;1"/>
+        <listEntry value="Shard;;{s1, s2};1;1"/>
+        <listEntry value="Tid;;{t1, t2};1;1"/>
+        <listEntry value="RSet;;t1 :&gt; {&lt;&lt;k1, 0&gt;&gt;, &lt;&lt;k2, 0&gt;&gt;} @@ t2 :&gt; {&lt;&lt;k1, 1&gt;&gt;, &lt;&lt;k2, 1&gt;&gt;};0;0"/>
         <listEntry value="Key;;{k1, k2};1;1"/>
         <listEntry value="KeySharding;;k1 :&gt; s1 @@ k2 :&gt; s2;0;0"/>
-        <listEntry value="TxCoord;;t1 :&gt; s1 @@ t2 :&gt; s2;0;0"/>
-        <listEntry value="Client;;{c1, c2};1;1"/>
-        <listEntry value="Shard;;{s1, s2};1;1"/>
+        <listEntry value="WSet;;t1 :&gt; {k2} @@ t2 :&gt; {k1};0;0"/>
+        <listEntry value="CVer;;t1 :&gt; 1 @@ t2 :&gt; 2;0;0"/>
+        <listEntry value="Coord;;t1 :&gt; s1 @@ t2 :&gt; s2;0;0"/>
     </listAttribute>
+    <stringAttribute key="modelParameterContraint" value=""/>
+    <listAttribute key="modelParameterDefinitions">
+        <listEntry value="NotTid;;NotTid;1;0"/>
+    </listAttribute>
+    <stringAttribute key="modelParameterModelValues" value="{}"/>
+    <stringAttribute key="modelParameterNewDefinitions" value=""/>
     <intAttribute key="modelVersion" value="20191005"/>
     <intAttribute key="numberOfWorkers" value="4"/>
     <stringAttribute key="result.mail.address" value=""/>
