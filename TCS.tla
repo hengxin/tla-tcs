@@ -6,7 +6,11 @@ and Alexey Gotsman.
 
 We have specified the multi-shot 2PC protocol in Figure 1 of DISC'2018.
 
-TODO: to specify the fault-tolerant commit protocol in Figure 5 of DISC'2018.
+TODO: We plan
+  - to test SER using the Serializability Theorem
+  - to integrate TCS into a real distributed transaction protocol
+  - to implement certification functions for other isolation levels
+  - to specify the fault-tolerant commit protocol in Figure 5 of DISC'2018.
 *)
 EXTENDS Naturals, Integers, FiniteSets, Sequences, Functions, TLC,
         FiniteSetsExt
@@ -163,5 +167,5 @@ Next ==
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 19:22:37 CST 2021 by hengxin
+\* Last modified Sun Jun 13 19:27:55 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin

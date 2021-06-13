@@ -1,6 +1,12 @@
 -------------------------------- MODULE TCS --------------------------------
 (*
-See DISC'2018: Multi-Shot Distributed Transaction Commit
+The specification of the Transaction Certification Service (TCS)
+in DISC'2018 "Multi-Shot Distributed Transaction Commit" by Gregory Chockler
+and Alexey Gotsman.
+
+We have specified the multi-shot 2PC protocol in Figure 1 of DISC'2018.
+
+TODO: to specify the fault-tolerant commit protocol in Figure 5 of DISC'2018.
 *)
 EXTENDS Naturals, Integers, FiniteSets, Sequences, Functions, TLC,
         FiniteSetsExt
@@ -20,10 +26,9 @@ NotTid == CHOOSE t : t \notin Tid
 Ver == 0 .. Cardinality(Tid) \* with a distinguished minimum version 0
 Slot == 0 .. Cardinality(Tid) - 1
 
-TKey(t) == WSet[t] \cup {kv[1] : kv \in RSet[t]}
-TSharding(t) == {KeySharding[k] : k \in TKey(t)}
+TShard(t) == {KeySharding[k] : k \in (WSet[t] \cup {kv[1] : kv \in RSet[t]})}
 
-ASSUME
+ASSUME \* TODO: See Section 2 of DISC'2018
     /\ RSet \in [Tid -> SUBSET (Key \X Ver)]
 \*    /\ \A t \in Tid: RSet[t]  \* TODO: one version per object
     /\ WSet \in [Tid -> SUBSET Key]
@@ -102,7 +107,7 @@ ComputeDecision(vs) ==
 ----------------------------------------------------------------------------
 Certify(t) == \* Certify t \in Tid
     /\ t \in Tid \ submitted
-    /\ Send([type : {"PREPARE"}, t : {t}, s : TSharding(t)])
+    /\ Send([type : {"PREPARE"}, t : {t}, s : TShard(t)])
     /\ submitted' = submitted \cup {t}
     /\ UNCHANGED sVars
 
@@ -126,7 +131,7 @@ PrepareAck(t, s) == \* PrepareAck for t \in Tid on shard s \in Shard when receiv
     /\ LET ms == {m \in msg : m.type = "PREPARE_ACK" /\ m.t = t}
            vs == {m.v : m \in ms}
            ss == {m.s : m \in ms}
-        IN /\ ss = TSharding(t)
+        IN /\ ss = TShard(t)
            /\ SendAndDelete({[type |-> "DECISION",
                                  p |-> ChooseUnique(ms, LAMBDA m : m.s = shard).n,
                                  d |-> ComputeDecision(vs),
@@ -143,6 +148,10 @@ Decision(s) == \* Decide on shard s \in Shard when receive a "DECISION" message
         /\ Delete({m})
     /\ UNCHANGED <<next, txn, vote, submitted>>
 ----------------------------------------------------------------------------
+(*
+TODO: adding the two non-deterministic actions
+*)
+----------------------------------------------------------------------------
 Next ==
     \/ \E t \in Tid: Certify(t)
     \/ \E t \in Tid, s \in Shard:
@@ -154,5 +163,5 @@ Next ==
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 19:13:20 CST 2021 by hengxin
+\* Last modified Sun Jun 13 19:22:37 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin
