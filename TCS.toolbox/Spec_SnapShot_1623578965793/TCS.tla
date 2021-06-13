@@ -45,6 +45,10 @@ VARIABLES
 sVars == <<next, txn, vote, dec, phase>>
 vars == <<next, txn, vote, dec, phase, msg, submitted>>
 ----------------------------------------------------------------------------
+(* TODO:
+"COMMIT/ABORT": using TRUE/FALSE (initially, FALSE???)
+"PREPARE/PREPARE_ACK/DECISION": using CONSTANTS
+*)
 Message == [type : {"PREPARE"}, t : Tid, s : Shard]
     \cup [type : {"PREPARE_ACK"}, s : Shard, n : Int, t : Tid, v : {"COMMIT", "ABORT"}]
     \cup [type : {"DECISION"}, p : Int, d : {"COMMIT", "ABORT"}, s : Shard]
@@ -71,8 +75,31 @@ Init ==
     /\ msg = {}
     /\ submitted = {}
 ----------------------------------------------------------------------------
-ComputeVote(t, s, n) == "ABORT" \* TODO
-ComputeDecision(ms) == "ABORT" \* TODO
+KeyOnShard(s) == {k \in Key : KeySharding[k] = s}
+
+ComputeVote(t, s, n) ==
+    LET cs == {k \in Slot : \* committed slots before position n
+                  /\ k < n
+                  /\ phase[s][k] = "DECIDED"
+                  /\ dec[s][k] = "COMMIT"}
+        ct == {txn[s][k] : k \in cs} \* committed transactions
+        fv == IF \A k \in KeyOnShard(s), v \in Ver:
+                  <<k, v>> \in RSet[t] => (\A c \in ct : k \in WSet[c] => CVer[c] <= v)
+              THEN "COMMIT" ELSE "ABORT"
+        ps == {k \in Slot: \* "prepared to commit" slots before position n
+                  /\ k < n
+                  /\ phase[s][k] = "PREPARED"
+                  /\ vote[s][k] = "COMMIT"}
+        pt == {txn[s][k] : k \in ps} \* "prepared to commit" transactions
+        gv == "ABORT"
+\*        gv == IF \A k \in KeyOnShard(s), v \in Ver:
+\*                  /\ <<k, v>> \in RSet[t] => (\A p \in pt : k \notin WSet[p])
+\*                  /\ k \in WSet[t] => (\A p \in pt : <<k, v>> \notin RSet[p])
+\*              THEN "COMMIT" ELSE "ABORT"
+     IN IF fv = "COMMIT" /\ gv = "COMMIT" THEN "COMMIT" ELSE "ABORT"
+
+ComputeDecision(vs) ==
+    IF \A v \in vs: v = "COMMIT" THEN "COMMIT" ELSE "ABORT"
 ----------------------------------------------------------------------------
 Certify(t) == \* Certify t \in Tid
     /\ t \in Tid \ submitted
@@ -85,7 +112,7 @@ Prepare(t, s) == \* Prepare t \in Tid on s \in Shard when receive "PREPARE(t)" m
         /\ m = [type |-> "PREPARE", t |-> t, s |-> s]
         /\ next' = [next EXCEPT ![s] = @ + 1]
         /\ txn' = [txn EXCEPT ![s][next'[s]] = t]
-        /\ vote' = [vote EXCEPT ![s][next'[s]] = ComputeVote(t, s, next'[s])] \* TODO
+        /\ vote' = [vote EXCEPT ![s][next'[s]] = ComputeVote(t, s, next'[s])]
         /\ phase' = [phase EXCEPT ![s][next'[s]] = "PREPARED"]
         /\ SendAndDelete({[type |-> "PREPARE_ACK",
                               s |-> s,
@@ -98,13 +125,14 @@ Prepare(t, s) == \* Prepare t \in Tid on s \in Shard when receive "PREPARE(t)" m
 PrepareAck(t, s) == \* PrepareAck for t \in Tid on shard s \in Shard when receive all "PREPARE_ACK" messages for t
     /\ s = Coord[t]
     /\ LET ms == {m \in msg : m.type = "PREPARE_ACK" /\ m.t = t}
-       shards == {m.s : m \in ms}
-        IN /\ shards = TSharding(t)
+           vs == {m.v : m \in ms}
+           ss == {m.s : m \in ms}
+        IN /\ ss = TSharding(t)
            /\ SendAndDelete({[type |-> "DECISION",
                                  p |-> ChooseUnique(ms, LAMBDA m : m.s = shard).n,
-                                 d |-> ComputeDecision(ms),
-                                 s |-> shard] : shard \in shards}, 
-                         ms)
+                                 d |-> ComputeDecision(vs),
+                                 s |-> shard] : shard \in ss}, 
+                            ms)
     /\ UNCHANGED <<sVars, submitted>>
 
 Decision(s) == \* Decide on shard s \in Shard when receive a "DECISION" message
@@ -127,5 +155,5 @@ Next ==
 Spec == Init /\ [][Next]_vars
 =============================================================================
 \* Modification History
-\* Last modified Sun Jun 13 17:04:21 CST 2021 by hengxin
+\* Last modified Sun Jun 13 18:09:18 CST 2021 by hengxin
 \* Created Sat Jun 12 21:01:57 CST 2021 by hengxin
